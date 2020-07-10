@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+<body>
+
+
+
+
+<label for="fname">User:</label>
+<input type="text" id="fname" name="fname"><br><br>
+<label for="lname">Password:</label>
+<input type="text" id="lname" name="lname"><br><br>
+<button type="button" onclick="loadDoc()">Send Data</button></br></br>
+
+
+
+<button type="button" onclick="loadDoc1()">Send Ajax JQuery</button></br></br>
+
+<button type="button" onclick="loadDoc2()">Send Ajax JavaScript</button></br></br>
+
+
+<script>
+    function loadDoc() {
+        var a = document.getElementById("fname").value;
+        var b = document.getElementById("lname").value;
+        var xhttp = new XMLHttpRequest();
+         xhttp.onreadystatechange = () => {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+         alert(xhttp.responseText);
+        }
+    }; 
+    xhttp.open("POST", "/ajax?fname="+a+"&lname="+b+"", true);
+    xhttp.send();
+  }
+
+
+
+  function loadDoc1() {
+    $.post( "/olo", { test: "richista ajax", olo: "Jquery" }, function(response) {
+   alert( response.output ); 
+    });
+  }
+
+
+
+
+function loadDoc2() {
+    var xhr = new XMLHttpRequest();
+    var url = "jsa";
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+        var json = JSON.parse(xhr.responseText);
+        alert( json.metodo + "-> " + json.proprieta); 
+        }
+    };
+    var data = JSON.stringify({ metodo: "loopbak", proprieta: "ciao bofa" });
+    xhr.send(data);
+}
+
+</script>
+</body>
+</html>
